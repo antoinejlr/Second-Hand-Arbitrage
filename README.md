@@ -17,9 +17,9 @@ Seeing a potential business opportunity and my passion for the field explains my
 The project requires a certain number of elements to make it work
 
 1. project structuring : goals, key milestones, questions
-2. Identify available data
-3. web scrapping and data storage set-up
-4. web scrapping automation
+2. Identify available data -- done
+3. web scrapping and data storage set-up -- done
+4. web scrapping automation -- done
 5. data cleaning and reconciliation
 6. data analysis
 7. data model
