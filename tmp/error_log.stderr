@@ -1,0 +1,105 @@
+Traceback (most recent call last):
+  File "/Users/Shared/github_projects/Second-Hand-Arbitrage/src/fetch_pages.py", line 15, in <module>
+    driver = webdriver.Firefox(service=DRIVER_PATH, options=options)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/firefox/webdriver.py", line 179, in __init__
+    RemoteWebDriver.__init__(
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 268, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 359, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 424, in execute
+    self.error_handler.check_response(response)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 247, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: Connection refused (os error 61)
+
+Traceback (most recent call last):
+  File "/Users/Shared/github_projects/Second-Hand-Arbitrage/src/fetch_pages.py", line 16, in <module>
+    driver.get('https://www.ricardo.ch/fr/s/canon%20ef?offer_type=fixed_price')
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 436, in get
+    self.execute(Command.GET, {'url': url})
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 424, in execute
+    self.error_handler.check_response(response)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 247, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=dnsNotFound&u=https%3A//www.ricardo.ch/fr/s/canon%2520ef%3Foffer_type%3Dfixed_price&c=UTF-8&d=We%20can%E2%80%99t%20connect%20to%20the%20server%20at%20www.ricardo.ch.
+Stacktrace:
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.jsm:181:5
+UnknownError@chrome://remote/content/shared/webdriver/Errors.jsm:488:5
+checkReadyState@chrome://remote/content/marionette/navigate.js:64:24
+onNavigation@chrome://remote/content/marionette/navigate.js:312:39
+emit@resource://gre/modules/EventEmitter.jsm:160:20
+receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.jsm:44:25
+
+Traceback (most recent call last):
+  File "/Users/Shared/github_projects/Second-Hand-Arbitrage/src/fetch_pages.py", line 16, in <module>
+    driver.get('https://www.ricardo.ch/fr/s/canon%20ef?offer_type=fixed_price')
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 436, in get
+    self.execute(Command.GET, {'url': url})
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 424, in execute
+    self.error_handler.check_response(response)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 247, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=dnsNotFound&u=https%3A//www.ricardo.ch/fr/s/canon%2520ef%3Foffer_type%3Dfixed_price&c=UTF-8&d=We%20can%E2%80%99t%20connect%20to%20the%20server%20at%20www.ricardo.ch.
+Stacktrace:
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.jsm:181:5
+UnknownError@chrome://remote/content/shared/webdriver/Errors.jsm:488:5
+checkReadyState@chrome://remote/content/marionette/navigate.js:64:24
+onNavigation@chrome://remote/content/marionette/navigate.js:312:39
+emit@resource://gre/modules/EventEmitter.jsm:160:20
+receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.jsm:44:25
+
+Traceback (most recent call last):
+  File "/Users/Shared/github_projects/Second-Hand-Arbitrage/src/fetch_pages.py", line 16, in <module>
+    driver.get('https://www.ricardo.ch/fr/s/canon%20ef?offer_type=fixed_price')
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 436, in get
+    self.execute(Command.GET, {'url': url})
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 424, in execute
+    self.error_handler.check_response(response)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 247, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=dnsNotFound&u=https%3A//www.ricardo.ch/fr/s/canon%2520ef%3Foffer_type%3Dfixed_price&c=UTF-8&d=We%20can%E2%80%99t%20connect%20to%20the%20server%20at%20www.ricardo.ch.
+Stacktrace:
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.jsm:181:5
+UnknownError@chrome://remote/content/shared/webdriver/Errors.jsm:488:5
+checkReadyState@chrome://remote/content/marionette/navigate.js:64:24
+onNavigation@chrome://remote/content/marionette/navigate.js:312:39
+emit@resource://gre/modules/EventEmitter.jsm:160:20
+receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.jsm:44:25
+
+Traceback (most recent call last):
+  File "/Users/Shared/github_projects/Second-Hand-Arbitrage/src/fetch_pages.py", line 16, in <module>
+    driver.get('https://www.ricardo.ch/fr/s/canon%20ef?offer_type=fixed_price')
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 436, in get
+    self.execute(Command.GET, {'url': url})
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 424, in execute
+    self.error_handler.check_response(response)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 247, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=dnsNotFound&u=https%3A//www.ricardo.ch/fr/s/canon%2520ef%3Foffer_type%3Dfixed_price&c=UTF-8&d=We%20can%E2%80%99t%20connect%20to%20the%20server%20at%20www.ricardo.ch.
+Stacktrace:
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.jsm:181:5
+UnknownError@chrome://remote/content/shared/webdriver/Errors.jsm:488:5
+checkReadyState@chrome://remote/content/marionette/navigate.js:64:24
+onNavigation@chrome://remote/content/marionette/navigate.js:312:39
+emit@resource://gre/modules/EventEmitter.jsm:160:20
+receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.jsm:44:25
+
+Traceback (most recent call last):
+  File "/Users/Shared/github_projects/Second-Hand-Arbitrage/src/fetch_pages.py", line 16, in <module>
+    driver.get('https://www.ricardo.ch/fr/s/canon%20ef?offer_type=fixed_price')
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 436, in get
+    self.execute(Command.GET, {'url': url})
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 424, in execute
+    self.error_handler.check_response(response)
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/arbitrage/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 247, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=dnsNotFound&u=https%3A//www.ricardo.ch/fr/s/canon%2520ef%3Foffer_type%3Dfixed_price&c=UTF-8&d=We%20can%E2%80%99t%20connect%20to%20the%20server%20at%20www.ricardo.ch.
+Stacktrace:
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.jsm:181:5
+UnknownError@chrome://remote/content/shared/webdriver/Errors.jsm:488:5
+checkReadyState@chrome://remote/content/marionette/navigate.js:64:24
+onNavigation@chrome://remote/content/marionette/navigate.js:312:39
+emit@resource://gre/modules/EventEmitter.jsm:160:20
+receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.jsm:44:25
+
