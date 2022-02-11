@@ -2,13 +2,16 @@
 import csv
 import glob
 import os
+import dateparser
 
+from datetime import date
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from tqdm import tqdm
 from pathlib import Path
+import regex as re
 
 options = webdriver.FirefoxOptions()
 options.headless = True
@@ -16,24 +19,19 @@ DRIVER_PATH = Service(
     "/Users/Shared/github_projects/Second-Hand-Arbitrage/exec/geckodriver"
 )
 
-# URL Quick Access for Tests
-root_url = "https://www.ricardo.ch"
-branch_url = "/fr/a/objektiv-canon-ef-100mm-1-2.-8l-makro-1193871126/"
-branch_url_2 = "/fr/a/canon-50mm-1.8-ef-1193903100/"
-# full url = 'https://www.ricardo.ch/fr/a/objektiv-canon-ef-100mm-1-2.-8l-makro-1193871126/'
-full_url = root_url + branch_url
-# full url 2 = 'https://www.ricardo.ch/fr/a/canon-50mm-1.8-ef-1193903100/'
-full_url_2 = root_url + branch_url_2
 
-
-def fetch_page_source(branch_url: str) -> str:
+def fetch_page_source(url: str, branch=True) -> str:
     """
     fetches the html product page
-    :param branch_url: ricardo product page url
+    :param branch: True by default, if url is a full url enter False
+    :param url: ricardo product page url
     :return: html string
     """
-    root_url = "https://www.ricardo.ch"
-    full_url = root_url + branch_url
+    if not branch:
+        full_url = url
+    else:
+        root_url = "https://www.ricardo.ch"
+        full_url = root_url + url
     driver = webdriver.Firefox(service=DRIVER_PATH, options=options)
     driver.get(full_url)
     pageSource = driver.page_source
@@ -79,6 +77,11 @@ def fetch_product_desc_from_file(file_name: str) -> tuple:
                 .div.div.contents[-1]
                 .article.get_text(separator="\n", strip=True)
         )
+        prod_quality = (bs.div.div.section.contents[-4]
+                        .div.div.div.contents[3]
+                        .div.div.div.section.contents[0]
+                        .contents[-1].contents[-1].text
+                 )
         try:
             header_description = (
                 bs.div.div.section.contents[-4]
@@ -89,26 +92,27 @@ def fetch_product_desc_from_file(file_name: str) -> tuple:
         except AttributeError:
             header_description = None
 
-    return header_description, body_description
+    return header_description, body_description, prod_quality
 
 
-def append_to_url_filename_description_mapping(
-        url: str, file_name: str, header_description: str, body_description: str
+def append_to_product_details(
+        url: str, file_name: str, header_description: str, body_description: str, prod_quality: str
 ) -> None:
     """
-    Adds a row to the url_filename_description_mapping csv containing
+    Adds a row to the product_details csv containing
     :param url: branch url of the product page
     :param file_name: valid file_name based on url
     :param header_description: product description header (sometimes does not exist)
     :param body_description: product description body (always exists)
+    :param prod_quality: product quality
     :return: None
     """
     with open(
-            "/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/url_filename_description_mapping.csv",
+            "/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/product_details.csv",
             "a",
     ) as file:
         writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC)
-        writer.writerow([url, file_name, header_description, body_description])
+        writer.writerow([url, file_name, header_description, body_description, prod_quality])
 
 
 def fetch_unique_product_urls() -> list:
@@ -161,30 +165,176 @@ def fetch_new_product_urls(unique_product_urls: list) -> list:
     return new_product_urls
 
 
+def product_urls_needing_update() -> list:
+    '''
+    scans the existing product pages in html_products and
+    checks if any product pages have ad end dates prior to today
+    if so, the function checks if the information whether the product was sold or not
+    if that information is missing it adds it to the list of urls needing an update
+    :return: list of urls needing an update
+    '''
+    today = date.today()
+    file_path_list = glob.glob("/Users/Shared/github_projects/Second-Hand-Arbitrage/html_product/*")
+    urls_to_fetch = []
+
+    for file in file_path_list:
+        with open(file, "r") as f:
+            bs = BeautifulSoup(f, "html.parser")
+
+            try:
+                end_date_str = (bs.html.body.contents[1].contents[0].section.contents[1]
+                                .contents[0].contents[0].contents[0].contents[2]
+                                .contents[0].contents[0].span.text
+                                )
+
+                end_date_str_re = re.sub(r'(.*\|\s)?', r'', end_date_str)
+                end_date = dateparser.parse(end_date_str_re).date()
+
+                if end_date < today:
+                    urls_to_fetch.append((Path(file).stem, bs.html.head.find_all('link')[4].get('href')))
+
+            except Exception:
+                pass
+    return urls_to_fetch
+
+
+def remove_bid_only_product_pages() -> None:
+    """
+    It can happen that updated product page are now bid-only which is out of scope
+    This function checks for these pages and removes them from the html_product folder
+    :return: None
+    """
+    today = date.today()
+    file_path_list = glob.glob("/Users/Shared/github_projects/Second-Hand-Arbitrage/html_product/*")
+    pages_to_remove = []
+    for file in file_path_list:
+        with open(file, "r") as f:
+            bs = BeautifulSoup(f, "html.parser")
+
+            try:
+                end_date_str = (bs.html.body.contents[1].contents[0].section.contents[1]
+                                .contents[0].contents[0].contents[0].contents[2]
+                                .contents[0].contents[0].span.text
+                                )
+
+                end_date_str_re = re.sub(r'(.*\|\s)?', r'', end_date_str)
+                end_date = dateparser.parse(end_date_str_re).date()
+
+                if end_date > today:
+                    try:
+                        (bs.html.body.contents[1].contents[0].section.contents[1]
+                         .contents[0].contents[0].contents[0].contents[2]
+                         .contents[0].contents[0].contents[3].a.text
+                         )
+                    except Exception:
+                        pages_to_remove.append(file)
+                        pass
+
+            except Exception:
+                pass
+
+    for page in pages_to_remove:
+        os.remove(page)
+    print(f'{len(pages_to_remove)} pages removed')
+
+    with open("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/urls_to_ignore.txt", "a") as ignored_urls:
+        for url in pages_to_remove:
+            ignored_urls.write(re.search(r"-(\d*).html$", url)[1] + '\n')
+
+
+def ad_status() -> None:
+    '''
+    fetches all product page htmls on disk and outputs to file a csv containing
+    the file url, the ad status (whether the product was sold), the price it went for, the end date
+    :return: None
+    '''
+    date.today()
+    file_path_list = glob.glob("/Users/Shared/github_projects/Second-Hand-Arbitrage/html_product/*")
+    urls_to_fetch = []
+
+    for file in file_path_list:
+        with open(file, "r") as f:
+            bs = BeautifulSoup(f, "html.parser")
+
+            try:
+                end_date_str = (bs.html.body.contents[1].contents[0].contents[3]
+                    .contents[2].contents[0].contents[0].contents[0]
+                    .contents[2].contents[0].contents[0].contents[1].contents[1]
+                    )
+
+                end_status = (bs.html.body.contents[1].contents[0].contents[3]
+                              .contents[0].contents[0].contents[0].contents[0]
+                              .contents[0].contents[0].contents[1].contents[0].text
+                              )
+
+                price = (bs.html.body.contents[1].contents[0].section.contents[2]
+                         .contents[0].contents[0].contents[0].contents[2]
+                         .contents[0].contents[0].contents[3].contents[0]
+                         .contents[1].text
+                         )
+
+                end_date = dateparser.parse(end_date_str).date()
+
+                urls_to_fetch.append((Path(file).stem, end_status, price, end_date))
+
+            except Exception:
+                end_date_str = (bs.html.body.contents[1].contents[0].section.contents[1]
+                                .contents[0].contents[0].contents[0].contents[2]
+                                .contents[0].contents[0].span.text
+                                )
+
+                price = (bs.html.body.contents[1].contents[0].section.contents[1]
+                         .contents[0].contents[0].contents[0].contents[2]
+                         .contents[0].contents[0].contents[3].contents[-2]
+                         .contents[1].text
+                         )
+
+                end_date_str_re = re.sub(r'(.*\|\s)?', r'', end_date_str)
+                end_date = dateparser.parse(end_date_str_re).date()
+
+                urls_to_fetch.append((Path(file).stem, "Live", price, end_date))
+
+    with open("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/ad_status.csv", "w") as file:
+        csv_out = csv.writer(file)
+        csv_out.writerow(['file_url', 'end_status', 'price', 'end_date'])
+        for row in urls_to_fetch:
+            csv_out.writerow(row)
+
+
 def main():
     unique_urls = fetch_unique_product_urls()  # get unique product urls by scanning all csv files
     urls = fetch_new_product_urls(unique_urls)  # keep the url of product pages absent in html_product
-    for url in tqdm(urls):  # scrape page by page the product urls and save them to html_product
-        page_source = fetch_page_source(url)
-        valid_name = url_to_file_name(url)
-        save_page_source(valid_name, page_source)
-    os.remove("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/url_filename_description_mapping.csv")
-    for url in tqdm(unique_urls):  # keep the
-        valid_name = url_to_file_name(url)
-        header_description, body_description = fetch_product_desc_from_file(
-            valid_name
-        )
-        append_to_url_filename_description_mapping(url, valid_name, header_description, body_description)
+    with open("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/urls_to_ignore.txt", "r") as urls_to_ignore:
+        urls_to_ignore_list = list((url_to_ignore_in_file.strip() for url_to_ignore_in_file in urls_to_ignore))
+
+    # scrape page by page the product urls and save them to html_product
+    for url in tqdm(urls):
+        if not any(ignore_url in url for ignore_url in urls_to_ignore_list):
+            page_source = fetch_page_source(url)
+            valid_name = url_to_file_name(url)
+            save_page_source(valid_name, page_source)
+
+    # save the product descriptions and quality to disk
+    try:
+        os.remove("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/product_details.csv")
+    except FileNotFoundError:
+        pass
+    for url in tqdm(unique_urls):
+        if not any(ignore_url in url for ignore_url in urls_to_ignore_list):
+            valid_name = url_to_file_name(url)
+            header_description, body_description, product_quality = fetch_product_desc_from_file(
+                valid_name
+            )
+            append_to_product_details(url, valid_name, header_description, body_description, product_quality)
+
+    # update the product pages for which the ads are now closed
+    urls_to_update_list = product_urls_needing_update()
+    for url_to_update_filename, url_to_update in tqdm(urls_to_update_list):
+        page_source = fetch_page_source(url_to_update, branch=False)
+        save_page_source(url_to_update_filename, page_source)
+    remove_bid_only_product_pages()
+    ad_status()
 
 
 if __name__ == "__main__":
     main()
-
-    # merge the original dataframe with the one with descriptions
-    # use the descriptions to identify the language of the ad
-    # harmonize the language of the ads
-    # save a list of all Canon products New and used on sale on official websites
-    # manually label the different ads
-    # feature engineer the product titles
-    # train a machine learning model to predict the product from the title of the ad
-    #
