@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3 class="display-5 mb-5">Featured Products</h3>
+<div align="left">
+	<div class="table-responsive">
+	    <table class="table table-hover">
+	    	<thead>
+			    <tr>
+					<th scope="col">#</th>
+					<th scope="col">Product</th>
+					<th scope="col">Live Listings</th>
+			    </tr>
+		  	</thead>
+		  	<tbody>
+		        {% for value in tables.values %} 
+			    <tr>
+					<th scope="row">{{loop.index}}</th>
+					<td class="text-nowrap"><a href="{{ url_for('routes.product', product=value[2])}}" class="text-reset text-decoration-none">{{ value[2] }}</a></td>
+					<td>{{ value[16] }}</td>
+		 		</tr>
+			    {% endfor %}
+		    </tbody>
+	    </table>
+	</div>
+</div>
+{% endblock content %}

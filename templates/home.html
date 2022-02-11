@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class='hero'>
+	<div class="container">
+		<h2 class="display-4 fw-bold lh-1 mb-3">Find your next lens</h2>
+		<h5 class="text-gray-soft lead">Our listings tracker lets you discover the best available Canon EF lens deals on the Swiss second-hand market.</h5>
+	</div>
+	</section>
+
+<!-- explore, deals, sell, buy -->
+<section>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-md-4 col-xs-12 mb-4">
+				<a class="text-decoration-none" href="{{ url_for('routes.deals') }}">
+					<div class="card">
+						<img class="mb-3" src="{{ url_for('static', filename='images/home_3.jpeg')}}">
+						<h5 class="card-title h3 text-center mb-3">Deals</h5>
+						<p class="card-text text-center text-muted mb-3 lead">Discover the most undervalued listings on right now</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-4 col-md-4 col-xs-12 mb-4">
+				<a class="text-decoration-none" href="{{ url_for('routes.product_index') }}">
+					<div class="card">
+						<img class="mb-3" src="{{ url_for('static', filename='images/home_4.jpeg')}}">
+						<h5 class="card-title h3 text-center mb-3">Products</h5>
+						<p class="card-text text-center text-muted mb-3 lead">Explore past listings and buy or sell your gear at the right price</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock content %}
+

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3 class="display-5 mb-5">Best Deals</h3>
+<div align="center">
+	<div class="table-responsive">
+	    <table class="table table-hover">
+				<thead>
+				    <tr>
+						<th scope="col">#</th>
+						<th scope="col">Product</th>
+						<th scope="col">Price</th>
+						<th scope="col" class="text-nowrap">vs Sold High</th>
+						<th scope="col" class="text-nowrap">vs Sold Mean</th>
+						<th scope="col" class="text-nowrap">vs Unsold Min</th>
+				    </tr>
+			  	</thead>
+			  	<tbody>
+			        {% for value in tables.values %} 
+				    <tr>
+						<th scope="row">{{loop.index}}</th>
+						<td class="text-nowrap"><a href="{{ value[0] }}" class="text-reset text-decoration-none">{{ value[2] }}</a></td>
+						<td>{{ value[6] }}</td>
+						<td>{{ value[19] }}</td>
+						<td>{{ value[21] }}</td>
+						<td>{{ value[20] }}</td>
+			 		</tr>
+				    {% endfor %}
+			    </tbody>
+	    </table>
+	</div>
+		</div>		
+
+
+{% endblock content %}
