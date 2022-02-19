@@ -16,7 +16,7 @@ today_plus_1_month = str((today + timedelta(days=30)).date())
 
 # data imports and transformation
 
-all_ads = pd.read_csv('all_ads.csv')
+all_ads = pd.read_csv('arbitrage/data/listings_with_summary.csv')
 
 all_ads.loc[:, "price":"price_sold_mean_dif"] = all_ads.loc[:, "price":"price_sold_mean_dif"]\
                                                 .apply(lambda x: np.floor(x)).astype('Int64')

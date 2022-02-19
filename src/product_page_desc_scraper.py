@@ -108,7 +108,7 @@ def append_to_product_details(
     :return: None
     """
     with open(
-            "/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/product_details.csv",
+            "/metadata/listings_unique.csv",
             "a",
     ) as file:
         writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC)
@@ -316,7 +316,7 @@ def main():
 
     # save the product descriptions and quality to disk
     try:
-        os.remove("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/product_details.csv")
+        os.remove("/metadata/listings_unique.csv")
     except FileNotFoundError:
         pass
     for url in tqdm(unique_urls):

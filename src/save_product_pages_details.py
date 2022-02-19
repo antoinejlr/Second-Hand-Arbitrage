@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 import regex as re
 from pathlib import Path
+import links
 
 
 def fetch_page_url(bs: BeautifulSoup) -> str:
@@ -161,8 +162,7 @@ def main():
     product_pages = glob.glob(
         "/Users/Shared/github_projects/Second-Hand-Arbitrage/html_product/*"
     )
-    with open("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/product_details.csv",
-              "w") as product_details:
+    with open(links.LISTINGS_UNIQUE, "w") as product_details:
 
         writer = csv.writer(product_details, quoting=csv.QUOTE_NONNUMERIC)
         writer.writerow(['file_url', 'page_url', 'product_title', 'end_date', 'end_status',

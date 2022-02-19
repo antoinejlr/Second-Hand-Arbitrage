@@ -194,6 +194,8 @@ def main():
     new_urls = fetch_new_product_urls(unique_urls)
     urls_to_update = fetch_product_urls_needing_update()  # ads passed their  end date but the end_status is absent
     urls = set(new_urls + urls_to_update)
+    print(f"new urls: {len(set(new_urls))}")
+    print(f"urls to update: {len(set(urls_to_update))}")
 
     # scrape page by page the product urls and save them to html_product
     for url in tqdm(urls):
