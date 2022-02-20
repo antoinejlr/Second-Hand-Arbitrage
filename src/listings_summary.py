@@ -1,5 +1,5 @@
 # Performs basic statistical computations on the listings with prediction dataframe
-# and saves the resulting dataframe to the flask app's data repository
+# and saves the resulting dataframe to the flask flask_app's data repository
 
 import pandas as pd
 import links

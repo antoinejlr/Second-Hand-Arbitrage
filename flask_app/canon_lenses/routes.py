@@ -16,7 +16,7 @@ today_plus_1_month = str((today + timedelta(days=30)).date())
 
 # data imports and transformation
 
-all_ads = pd.read_csv('app/data/listings_with_summary.csv')
+all_ads = pd.read_csv('flask_app/data/listings_with_summary.csv')
 
 all_ads.loc[:, "price":"price_sold_mean_dif"] = all_ads.loc[:, "price":"price_sold_mean_dif"]\
                                                 .apply(lambda x: np.floor(x)).astype('Int64')
@@ -66,7 +66,7 @@ def product_index():
 
 @routes.route("/product/<string:product>")
 def product(product):
-    product_image_paths = glob.glob('app/static/products/*')
+    product_image_paths = glob.glob('flask_app/static/products/*')
     filename = return_path(product_image_paths, product)
     
     product_all_ads = all_ads[all_ads['model_product'] == product]
