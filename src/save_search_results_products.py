@@ -18,7 +18,7 @@ def append_details(objects):
         try:
             id = i["href"]
         except Exception:
-            id = None
+            continue
         try:
             name = (
                 BeautifulSoup(f"{i}", "html.parser")
@@ -26,7 +26,7 @@ def append_details(objects):
                     .string
             )
         except Exception:
-            name = None
+            continue
         try:
             price = (
                 BeautifulSoup(f"{i}", "html.parser")
@@ -36,7 +36,7 @@ def append_details(objects):
                     .string
             )
         except Exception:
-            price = None
+            continue
         rows.append([id, name, price, today])
 
 
