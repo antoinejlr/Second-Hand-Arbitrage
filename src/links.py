@@ -12,3 +12,5 @@ DRIVER = "/Users/Shared/github_projects/Second-Hand-Arbitrage/exec/geckodriver"
 
 SRC_PATH_FULL = "/Users/Shared/github_projects/Second-Hand-Arbitrage/html_to_process/"
 TRG_PATH_FULL = "/Users/Shared/github_projects/Second-Hand-Arbitrage/html_processed/"
+
+PRODUCT_IMAGES = "/Users/Shared/github_projects/Second-Hand-Arbitrage/arbitrage/static/products/"
