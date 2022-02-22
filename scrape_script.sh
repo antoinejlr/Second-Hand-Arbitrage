@@ -10,6 +10,6 @@ cd src
 Python3 orchestration.py
 
 today=$(date +%x)
-git add ../arbitrage/data/listings_with_summary.csv
+git add ../flask_app/data/listings_with_summary.csv
 git commit -m "$today update"
 git push

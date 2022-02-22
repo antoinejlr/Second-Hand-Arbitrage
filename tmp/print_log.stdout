@@ -421,3 +421,56 @@ operation complete: 7 pages saved
 7 page loaded
 All search result pages fetched successfully
 Full search product pages saved to csv
+Connection successful, starting script
+1 page loaded
+2 page loaded
+3 page loaded
+4 page loaded
+5 page loaded
+6 page loaded
+All search result pages fetched successfully
+Full search product pages saved to csv
+1 pages removed
+Product pages fetched successfully
+Unique listings fetched
+Unique listings cleaned
+Unique listing features created
+Unique listing products predicted
+Unique listing with summary statistics saved
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../flask_app/data/listings_with_summary.csv
+	modified:   ../tmp/error_log.stderr
+	modified:   ../tmp/print_log.stdout
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../data_transformation/
+	../models/
+	../notebooks/
+	create_folds_strat_k.py
+	send_email.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Connection successful, starting script
+1 page loaded
+2 page loaded
+3 page loaded
+4 page loaded
+5 page loaded
+6 page loaded
+All search result pages fetched successfully
+Full search product pages saved to csv
+1 pages removed
+Product pages fetched successfully
+Unique listings fetched
+Unique listings cleaned
+Unique listing features created
+Unique listing products predicted
+Unique listing with summary statistics saved
+[main a1da8d5] 02/22/22 update
+ 1 file changed, 310 insertions(+), 299 deletions(-)
