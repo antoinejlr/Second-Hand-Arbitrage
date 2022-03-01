@@ -9,9 +9,10 @@
 - How it all works
     - Operating model
     - Technologies used
-	- Part 1: Get the data
-	- Part 2: Transform the data
-	- Part 3: Visualize the data
+    - Get the data
+    - Transform the data
+    - Visualize the data
+    - Automate
 - Appendix
 
 ## Introduction
@@ -51,7 +52,7 @@ Code is executed sequentially via orchestration scripts
 
 ### Technologies used
 
-**Languages**: The project is developed almost exclusively in Python 3. The web-app front-end uses HTML, CSS, JavaScript and leverages Bootstrap.
+**Languages**: The project is developed almost exclusively in Python 3. The web-app front-end uses HTML, CSS, JavaScript and leverages Bootstrap
 
 **Modules**: Beautiful Soup and Selenium for web-scrapping, pandas and RegEx for data processing, scikit-learn for modelling, Flask, Jinja and Charts.js for the web-app
 
