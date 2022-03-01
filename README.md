@@ -17,7 +17,7 @@
 ## Introduction
 ### What is lensfinder?
 lensfinder is a website that helps you find the best deals for Canon lenses on the Swiss second-hand market. 
-The underlying compiled product listing data generate the insights that bolsters your decision-making when it comes to buying or selling lenses.
+The underlying compiled dataset generates the insights that enable you to make a buy or sell decision.
 
 The solution offers three views:
 - A snapshot of the best live listings
