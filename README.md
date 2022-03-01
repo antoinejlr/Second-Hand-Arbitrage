@@ -7,7 +7,7 @@
     - Who is it for?
     - Why build this?
 - How it all works
-    - Operating Model
+    - Operating model
     - Technologies used
 	- Part 1: Get the data
 	- Part 2: Transform the data
