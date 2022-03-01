@@ -40,7 +40,7 @@ The diagram below attempts to provide a high level abstraction of what is happen
 In essence, we scrape listings, classify them into unique products using a machine learning model, compute summary statistics per product and display the results. All this is run daily through orchestration modules.
 
 *click the image for better resolution*
-<img src="glob/model.png">
+<img src="glob/Model.png">
 
 Code is executed sequentially via orchestration scripts
 1. First, get the data : build a historical data set through web-scrapping and automation
