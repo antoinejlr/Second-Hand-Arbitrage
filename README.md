@@ -141,7 +141,7 @@ Live listings have their own table. Clicking on an entry sends you to the listin
 The app directory is available on GitHub. Heroku, fetches the files and creates a build with each new commit to the main branch.
 
 
-## Automate
+### Automate
 
 Automation plays a central part in ensuring data quality and eliminating the manual effort needed to update the app's data. The first piece of automation implemented was to ensure scrapping jobs were running every day. I added a preference file to the launch_agent folder on my local machine that runs a bash script daily. This script runs the orchestration file that initiates the data pipeline (see the "How this works" diagram) and commits the summary data frame to the main branch, thereby starting a new build by Heroku. Whether the orchestration sequence runs successfully or not, I get an email. I usually only get a failed job if I am not connected to the internet, or my laptop is closed during selenium calls. 
 
