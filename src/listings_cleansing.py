@@ -8,7 +8,7 @@ import links
 def main():
     listings_unique_df = pd.read_csv(links.LISTINGS_UNIQUE)
 
-    # Keywords you wouldn't find in a CANON EF lens listing title
+    # Keywords you wouldn't find in a listing title that sells a Canon EF lens
     EXCLUDED_PATTERNS = ['CUP', 'MODE', 'KOFFER', 'CONVERTER', 'EXTENDER', 'KIT', 'HALTERUNG', 'EOS',
                          'BAGUE', 'TAMRON', 'NIKON', 'TOKINA', 'ARTISAN', 'SIGMA', 'SONYSPIEGELLOS',
                          'MODUS', 'KAFFEETASSE', 'T\\d', 'FD', 'BUNDLE', 'LAOWA', 'METABONES',
