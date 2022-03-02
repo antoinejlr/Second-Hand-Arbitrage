@@ -7,17 +7,18 @@
     - Who is it for?
     - Why build this?
 - How it all works
-    - Operating Model
+    - Operating model
     - Technologies used
-	- Part 1: Get the data
-	- Part 2: Transform the data
-	- Part 3: Visualize the data
+    - Get the data
+    - Transform the data
+    - Visualize the data
+    - Automate
 - Appendix
 
 ## Introduction
 ### What is lensfinder?
 lensfinder is a website that helps you find the best deals for Canon lenses on the Swiss second-hand market. 
-The underlying compiled product listing data generate the insights that bolsters your decision-making when it comes to buying or selling lenses.
+The underlying compiled dataset generates the insights that enable you to make a buy or sell decision.
 
 The solution offers three views:
 - A snapshot of the best live listings
@@ -40,7 +41,7 @@ The diagram below attempts to provide a high level abstraction of what is happen
 In essence, we scrape listings, classify them into unique products using a machine learning model, compute summary statistics per product and display the results. All this is run daily through orchestration modules.
 
 *click the image for better resolution*
-<img src="glob/model.png">
+<img src="glob/Model.png">
 
 Code is executed sequentially via orchestration scripts
 1. First, get the data : build a historical data set through web-scrapping and automation
@@ -51,7 +52,7 @@ Code is executed sequentially via orchestration scripts
 
 ### Technologies used
 
-**Languages**: The project is developed almost exclusively in Python 3. The web-app front-end uses HTML, CSS, JavaScript and leverages Bootstrap.
+**Languages**: The project is developed almost exclusively in Python 3. The web-app front-end uses HTML, CSS, JavaScript and leverages Bootstrap
 
 **Modules**: Beautiful Soup and Selenium for web-scrapping, pandas and RegEx for data processing, scikit-learn for modelling, Flask, Jinja and Charts.js for the web-app
 
@@ -141,7 +142,7 @@ Live listings have their own table. Clicking on an entry sends you to the listin
 The app directory is available on GitHub. Heroku, fetches the files and creates a build with each new commit to the main branch.
 
 
-## Automate
+### Automate
 
 Automation plays a central part in ensuring data quality and eliminating the manual effort needed to update the app's data. The first piece of automation implemented was to ensure scrapping jobs were running every day. I added a preference file to the launch_agent folder on my local machine that runs a bash script daily. This script runs the orchestration file that initiates the data pipeline (see the "How this works" diagram) and commits the summary data frame to the main branch, thereby starting a new build by Heroku. Whether the orchestration sequence runs successfully or not, I get an email. I usually only get a failed job if I am not connected to the internet, or my laptop is closed during selenium calls. 
 
