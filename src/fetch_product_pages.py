@@ -159,6 +159,50 @@ def remove_bid_only_product_pages() -> None:
             bs = BeautifulSoup(f, "html.parser")
 
             try:
+                end_date_str = (bs.html.body.contents[0].contents[0].section.contents[1]
+                                .contents[0].contents[0].contents[0].contents[2]
+                                .contents[0].contents[0].span.text
+                                )
+
+                end_date_str_re = re.sub(r'(.*\|\s)?', r'', end_date_str)
+                end_date = dateparser.parse(end_date_str_re).date()
+
+                if end_date > today:
+                    try:
+                        (bs.html.body.contents[1].contents[0].section.contents[1]
+                         .contents[0].contents[0].contents[0].contents[2]
+                         .contents[0].contents[0].contents[3].a.text
+                         )
+                    except Exception:
+                        pages_to_remove.append(file)
+                        pass
+
+            except Exception:
+                pass
+
+    for page in pages_to_remove:
+        os.remove(page)
+    print(f'{len(pages_to_remove)} pages removed')
+
+    with open("/Users/Shared/github_projects/Second-Hand-Arbitrage/metadata/urls_to_ignore.txt", "a") as ignored_urls:
+        for url in pages_to_remove:
+            ignored_urls.write(re.search(r"-(\d*).html$", url)[1] + '\n')
+
+
+def remove_bid_only_product_pages2() -> None:
+    """
+    It can happen that updated product page are now bid-only which is out of scope
+    This function checks for these pages and removes them from the html_product folder
+    :return: None
+    """
+    today = date.today()
+    file_path_list = glob.glob("/Users/Shared/github_projects/Second-Hand-Arbitrage/html_product/*")
+    pages_to_remove = []
+    for file in file_path_list:
+        with open(file, "r") as f:
+            bs = BeautifulSoup(f, "html.parser")
+
+            try:
                 end_date_str = (bs.html.body.contents[1].contents[0].section.contents[1]
                                 .contents[0].contents[0].contents[0].contents[2]
                                 .contents[0].contents[0].span.text

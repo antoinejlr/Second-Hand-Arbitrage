@@ -13,7 +13,11 @@ import links
 def fetch_page_url(bs: BeautifulSoup) -> str:
     page_url = None
     try:
-        page_url = bs.html.head.find_all('link')[4].get('href')
+        page_urls = bs.html.head.find_all('link')
+        for i in page_urls:
+            if i.get('rel') == ['canonical']:
+                page_url = i.get('href')
+                break
     except Exception:
         pass
     return page_url
@@ -40,7 +44,7 @@ def fetch_product_title(bs: BeautifulSoup) -> str:
 
 def fetch_body_desc(bs: BeautifulSoup) -> str:
     body_description = None
-    try :
+    try:
         body_description = (
             bs.div.div.section.contents[-4]
                 .div.div.div.contents[3]
