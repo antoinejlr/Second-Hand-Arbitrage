@@ -136,7 +136,7 @@ def fetch_product_urls_needing_update() -> list:
                 end_date = dateparser.parse(end_date_str_re).date()
 
                 if end_date < today:
-                    url = bs.html.head.find_all('link')[4].get('href')
+                    url = bs.html.head.find_all('link')[0].get('href')
                     short_url = re.search(r'(.ch)(.*)', url)[2]
                     urls_to_fetch.append(short_url)
 
@@ -202,6 +202,7 @@ def main():
         save_page_source(valid_name, page_source)
 
     remove_bid_only_product_pages()
+
 
 
 if __name__ == "__main__":
