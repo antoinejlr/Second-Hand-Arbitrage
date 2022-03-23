@@ -39,11 +39,13 @@ if __name__ == "__main__":
         if flow:
             print("Connection successful, starting script")
             flow = fetch_search_results_pages.main()
+            print("All search result pages fetched successfully")
         else:
             print('Failed to connect: aborting script')
         if flow:
-            print("All search result pages fetched successfully")
+            print("Starting save_search_results_products")
             flow = save_search_results_products.main()
+            print("Completed save_search_results_products successfully")
         if flow:
             print("Full search product pages saved to csv")
             fetch_product_pages.main()

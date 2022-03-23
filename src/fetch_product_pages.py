@@ -136,8 +136,12 @@ def fetch_product_urls_needing_update() -> list:
                 end_date = dateparser.parse(end_date_str_re).date()
 
                 if end_date < today:
-                    url = bs.html.head.find_all('link')[0].get('href')
-                    short_url = re.search(r'(.ch)(.*)', url)[2]
+                    page_urls = bs.html.head.find_all('link')
+                    for i in page_urls:
+                        if i.get('rel') == ['canonical']:
+                            page_url = i.get('href')
+                            break
+                    short_url = re.search(r'(.ch)(.*)', page_url)[2]
                     urls_to_fetch.append(short_url)
 
             except Exception:

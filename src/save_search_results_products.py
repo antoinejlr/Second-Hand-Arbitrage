@@ -9,11 +9,10 @@ import links
 
 from bs4 import BeautifulSoup
 
-rows = []
 today = str(date.today() - timedelta(days=0))
 
 
-def append_details(objects):
+def append_details(objects, rows):
     for ind, i in enumerate(objects):
         try:
             id = i["href"]
@@ -31,9 +30,8 @@ def append_details(objects):
             price = (
                 BeautifulSoup(f"{i}", "html.parser")
                     .select(
-                    "div > div:last-of-type > div > div:last-of-type > div:last-of-type > h4"
-                )[0]
-                    .string
+                    "div > div:last-of-type > div > div:last-of-type > div:last-of-type >  div:last-of-type"
+                )[0].string
             )
         except Exception:
             continue
@@ -41,6 +39,7 @@ def append_details(objects):
 
 
 def main():
+    rows = []
     files_processed = glob.glob(links.TRG_PATH_FULL + f"{today}_*.html")
     if files_processed:
         return True
@@ -53,16 +52,16 @@ def main():
                 with open(file_path, "r") as html:
                     bs = BeautifulSoup(html, "html.parser")
                     objects = (
-                        bs.div.div.section.div.div.contents[1].contents[0].main.contents[5].div.contents
+                        bs.div.div.section.div.div.contents[1].contents[0].main.contents[5].div.select('a')
                     )
-                    append_details(objects)
+                    append_details(objects, rows)
 
             with open(f"../csv files/ricardo_{today}.csv", "w") as csv_file:
                 writer = csv.writer(csv_file, quoting=csv.QUOTE_NONNUMERIC)
                 for row in rows:
                     writer.writerow(row)
 
-            for src_file in Path(links.SRC_PATH_FULL).glob("*.html"):
+            for src_file in Path(links.SRC_PATH_FULL).glob(f"{today}_*.html"):
                 shutil.move(
                     os.path.join(links.SRC_PATH_FULL, os.path.basename(src_file)),
                     os.path.join(links.TRG_PATH_FULL, os.path.basename(src_file)),
