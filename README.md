@@ -1,6 +1,8 @@
 # lensfinder
 <img src="glob/lensfinder_demo.png">
 
+**NB: The app is no longer live but I will keep the archive and code accessible on github.**
+
 ## Table of contents
 - Introduction
     - What is lensfinder?
